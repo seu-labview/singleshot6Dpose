@@ -225,8 +225,8 @@ def eval(niter, datacfg, cfgfile):
                         box_pr        = boxes[j]
                         bb2d_gt       = get_2d_bb(box_gt[:18], output.size(3))
                         bb2d_pr       = get_2d_bb(box_pr[:18], output.size(3))
-                        iou           = bbox_iou(bb2d_gt, bb2d_pr)
-                        match         = corner_confidence9(box_gt[:18], torch.FloatTensor(boxes[j][:18]))
+                        #iou           = bbox_iou(bb2d_gt, bb2d_pr)
+                        #match         = corner_confidence9(box_gt[:18], torch.FloatTensor(boxes[j][:18]))
 
                 # Denormalize the corner predictions 
                 corners2D_gt = np.array(np.reshape(box_gt[:18], [9, 2]), dtype='float32')
@@ -365,10 +365,10 @@ if __name__ == "__main__":
     model.seen        = 0
     region_loss.iter  = model.iter
     region_loss.seen  = model.seen
-    processed_batches = model.seen/batch_size
+    processed_batches = model.seen//batch_size
     init_width        = model.width
     init_height       = model.height
-    init_epoch        = model.seen/nsamples 
+    init_epoch        = model.seen//nsamples 
 
     # Variable to save
     training_iters          = []
