@@ -122,11 +122,12 @@ def valid(datacfg, cfgfile, weightfile, outfile):
             target = target.cuda()
         
         # Wrap tensors in Variable class, set volatile=True for inference mode and to use minimal memory during inference
-        data = Variable(data, volatile=True)
+        data = Variable(data)
         t2 = time.time()
         
         # Forward pass
-        output = model(data).data  
+        with torch.no_grad():
+            output = model(data).data  
         t3 = time.time()
         
         # Using confidence threshold, eliminate low-confidence predictions
