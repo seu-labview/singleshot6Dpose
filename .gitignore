@@ -332,3 +332,6 @@ ASALocalRun/
 LINEMOD
 VOCdevkit
 *.weights
+*.tar
+.DS_Store
+backup/darknet19_448.conv.23
