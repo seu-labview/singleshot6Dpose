@@ -328,11 +328,3 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
-
-LINEMOD
-VOCdevkit
-backup
-launch.json
-settings.json
-*.weights
-cfg/darknet19_448.conv.23
