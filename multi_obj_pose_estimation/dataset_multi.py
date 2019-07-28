@@ -29,6 +29,8 @@ class listDataset(Dataset):
        # self.bg_file_names    = get_all_files(bg)
        self.bg_file_names    = bg_file_names
        self.objclass         = objclass
+       
+       self.cell_size = 32
 
     def __len__(self):
         return self.nSamples
@@ -37,21 +39,21 @@ class listDataset(Dataset):
         assert index <= len(self), 'index range error'
         imgpath = self.lines[index].rstrip()
 
-        if self.train and index % 64== 0:
-            if self.seen < 4000*64:
-               width = 13*32
+        if self.train and index % self.batch_size == 0:
+            if self.seen < 4000*self.batch_size:
+               width = 13*self.cell_size
                self.shape = (width, width)
-            elif self.seen < 8000*64:
-               width = (random.randint(0,3) + 13)*32
+            elif self.seen < 8000*self.batch_size:
+               width = (random.randint(0,3) + 13)*self.cell_size
                self.shape = (width, width)
-            elif self.seen < 12000*64:
-               width = (random.randint(0,5) + 12)*32
+            elif self.seen < 12000*self.batch_size:
+               width = (random.randint(0,5) + 12)*self.cell_size
                self.shape = (width, width)
-            elif self.seen < 16000*64:
-               width = (random.randint(0,7) + 11)*32
+            elif self.seen < 16000*self.batch_size:
+               width = (random.randint(0,7) + 11)*self.cell_size
                self.shape = (width, width)
             else: # self.seen < 20000*64:
-               width = (random.randint(0,9) + 10)*32
+               width = (random.randint(0,9) + 10)*self.cell_size
                self.shape = (width, width)
 
         if self.train:
@@ -76,7 +78,7 @@ class listDataset(Dataset):
             label = torch.zeros(50*21)
             if os.path.getsize(labpath):
                 ow, oh = img.size
-                tmp = torch.from_numpy(read_truths_args(labpath, 8.0/ow))
+                tmp = torch.from_numpy(read_truths_args(labpath))
                 tmp = tmp.view(-1)
                 tsz = tmp.numel()
                 if tsz > 50*21:
