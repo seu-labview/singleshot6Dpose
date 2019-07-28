@@ -31,8 +31,8 @@ def calcAngularDistance(gt_rot, pr_rot):
 
 def get_camera_intrinsic():
     K = np.zeros((3, 3), dtype='float64')
-    K[0, 0], K[0, 2] = 572.4114, 325.2611
-    K[1, 1], K[1, 2] = 573.5704, 242.0489
+    K[0, 0], K[0, 2] = 618.3287, 309.8568
+    K[1, 1], K[1, 2] = 618.3289, 237.4846
     K[2, 2] = 1.
     return K
 
@@ -84,14 +84,11 @@ def get_3D_corners(vertices):
     return corners
 
 def pnp(points_3D, points_2D, cameraMatrix):
-    try:
-        distCoeffs = pnp.distCoeffs
-    except:
-        distCoeffs = np.zeros((8, 1), dtype='float32')
+    distCoeffs = np.zeros((8, 1), dtype='float32')
 
     assert points_2D.shape[0] == points_2D.shape[0], 'points 3D and points 2D must have same number of vertices'
 
-    _, R_exp, t = cv2.solvePnP(points_3D,
+    _, R_exp, t , inlier = cv2.solvePnPRansac(points_3D,
                               # points_2D,
                               np.ascontiguousarray(points_2D[:,:2]).reshape((-1,1,2)),
                               cameraMatrix,
