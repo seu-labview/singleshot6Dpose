@@ -11,6 +11,7 @@ from darknet import Darknet
 import dataset
 from utils import *
 from MeshPly import MeshPly
+import re
 
 # Create new directory
 def makedirs(path):
@@ -43,7 +44,7 @@ def valid(datacfg, cfgfile, weightfile, outfile):
     if use_cuda:
         os.environ['CUDA_VISIBLE_DEVICES'] = gpus
         torch.cuda.manual_seed(seed)
-    save            = False
+    save            = True
     testtime        = True
     use_cuda        = True
     num_classes     = 1
@@ -184,8 +185,7 @@ def valid(datacfg, cfgfile, weightfile, outfile):
                     gts_trans.append(t_gt)
                     preds_rot.append(R_pr)
                     gts_rot.append(R_gt)
-                    filename = filter(str.isdigit, valid_files)
-                    print(filename)
+                    filename = re.search(r'(?<=JPEGImages/)(.*?)(?=.jpg)', valid_files).group(1)
                     np.savetxt(backupdir + '/test/gt/R_' + filename + 'txt', np.array(R_gt, dtype='float32'))
                     np.savetxt(backupdir + '/test/gt/t_' + filename + 'txt', np.array(t_gt, dtype='float32'))
                     np.savetxt(backupdir + '/test/pr/R_' + filename + 'txt', np.array(R_pr, dtype='float32'))
