@@ -78,8 +78,8 @@ def valid(datacfg, cfgfile, weightfile, outfile):
     mesh          = MeshPly(meshname)
     vertices      = np.c_[np.array(mesh.vertices), np.ones((len(mesh.vertices), 1))].transpose()
     corners3D     = get_3D_corners(vertices)
-    # diam          = calc_pts_diameter(np.array(mesh.vertices))
-    diam          = float(options['diam'])
+    diam          = calc_pts_diameter(np.array(mesh.vertices))
+    # diam          = float(options['diam'])
 
     # Read intrinsic camera parameters
     internal_calibration = get_camera_intrinsic()
@@ -183,13 +183,14 @@ def valid(datacfg, cfgfile, weightfile, outfile):
                     gts_trans.append(t_gt)
                     preds_rot.append(R_pr)
                     gts_rot.append(R_gt)
-
-                    np.savetxt(backupdir + '/test/gt/R_' + valid_files[count][-8:-3] + 'txt', np.array(R_gt, dtype='float32'))
-                    np.savetxt(backupdir + '/test/gt/t_' + valid_files[count][-8:-3] + 'txt', np.array(t_gt, dtype='float32'))
-                    np.savetxt(backupdir + '/test/pr/R_' + valid_files[count][-8:-3] + 'txt', np.array(R_pr, dtype='float32'))
-                    np.savetxt(backupdir + '/test/pr/t_' + valid_files[count][-8:-3] + 'txt', np.array(t_pr, dtype='float32'))
-                    np.savetxt(backupdir + '/test/gt/corners_' + valid_files[count][-8:-3] + 'txt', np.array(corners2D_gt, dtype='float32'))
-                    np.savetxt(backupdir + '/test/pr/corners_' + valid_files[count][-8:-3] + 'txt', np.array(corners2D_pr, dtype='float32'))
+                    filename = filter(str.isdigit, valid_files)
+                    print(filename)
+                    np.savetxt(backupdir + '/test/gt/R_' + filename + 'txt', np.array(R_gt, dtype='float32'))
+                    np.savetxt(backupdir + '/test/gt/t_' + filename + 'txt', np.array(t_gt, dtype='float32'))
+                    np.savetxt(backupdir + '/test/pr/R_' + filename + 'txt', np.array(R_pr, dtype='float32'))
+                    np.savetxt(backupdir + '/test/pr/t_' + filename + 'txt', np.array(t_pr, dtype='float32'))
+                    np.savetxt(backupdir + '/test/gt/corners_' + filename + 'txt', np.array(corners2D_gt, dtype='float32'))
+                    np.savetxt(backupdir + '/test/pr/corners_' + filename + 'txt', np.array(corners2D_pr, dtype='float32'))
                 
                 # Compute translation error
                 trans_dist   = np.sqrt(np.sum(np.square(t_gt - t_pr)))

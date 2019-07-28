@@ -1,0 +1,5 @@
+train  = LINEMOD/safeguard/train.txt
+valid  = LINEMOD/safeguard/test.txt
+backup = backup/safeguard
+mesh = LINEMOD/safeguard/registeredScene.ply
+name = safeguard
