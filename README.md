@@ -54,11 +54,11 @@ Alternatively, you can directly go to the links above and manually download and 
 To train the model run,
 
 ```
-python train.py datafile cfgfile initweightfile
+python3 train.py datafile cfgfile initweightfile
 ```
 e.g.
 ```
-python train.py cfg/ape.data cfg/yolo-pose.cfg backup/ape/init.weights
+python3 train.py cfg/ape.data cfg/yolo-pose.cfg backup/ape/init.weights
 ```
 
 [datafile] contains information about the training/test splits and 3D object models
@@ -80,16 +80,16 @@ layer     filters    size              input                output
    31 detection
 ```
 
-This defines the network structure. During training, the best network model is saved into the "model.weights" file. To train networks for other objects, just change the object name while calling the train function, e.g., "python train.py cfg/duck.data cfg/yolo-pose.cfg backup/duck/init.weights" 
+This defines the network structure. During training, the best network model is saved into the "model.weights" file. To train networks for other objects, just change the object name while calling the train function, e.g., "python3 train.py cfg/duck.data cfg/yolo-pose.cfg backup/duck/init.weights" 
 
 #### Testing the model
 
 To test the model run
 
 ```
-python valid.py datafile cfgfile weightfile
+python3 valid.py datafile cfgfile weightfile
 e.g.,
-python valid.py cfg/ape.data cfg/yolo-pose.cfg backup/ape/model_backup.weights
+python3 valid.py cfg/ape.data cfg/yolo-pose.cfg backup/ape/model_backup.weights
 ```
 
 [weightfile] contains our trained models. 
@@ -99,7 +99,7 @@ python valid.py cfg/ape.data cfg/yolo-pose.cfg backup/ape/model_backup.weights
 Models are already pretrained but if you would like to pretrain the network from scratch and get the initialization weights yourself, you can run the following:
 
 ```
-python train.py cfg/ape.data cfg/yolo-pose-pre.cfg cfg/darknet19_448.conv.23
+python3 train.py cfg/ape.data cfg/yolo-pose-pre.cfg cfg/darknet19_448.conv.23
 cp backup/ape/model.weights backup/ape/init.weights
 ```
 
@@ -112,19 +112,19 @@ Inside multi_obj_pose_estimation/ folder
 Testing:
 
 ```
-python valid_multi.py cfgfile weightfile
+python3 valid_multi.py cfgfile weightfile
 e.g.,
-python valid_multi.py cfg/yolo-pose-multi.cfg backup_multi/model_backup.weights
+python3 valid_multi.py cfg/yolo-pose-multi.cfg backup_multi/model_backup.weights
 ```
 
 Training:
 
 ```
-python train_multi.py datafile cfgfile weightfile
+python3 train_multi.py datafile cfgfile weightfile
 ```
 e.g.,
 ```
-python train_multi.py cfg/occlusion.data cfg/yolo-pose-multi.cfg backup_multi/init.weights
+python3 train_multi.py cfg/occlusion.data cfg/yolo-pose-multi.cfg backup_multi/init.weights
 ```
 
 #### Label files
